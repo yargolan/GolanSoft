@@ -1,0 +1,8 @@
+{
+  "root_dir": "/Users/yg356h/Desktop/Nezeq",
+  "script_name_daily": "ping_google_daily_summary.py",
+  "script_name_per_minute": "ping_google_DNS_server.py",
+  "pings_log_file": "Nezeq.txt",
+  "log_file_daily": "Daily.txt",
+  "google_server": "8.8.8.8"
+}

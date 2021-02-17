@@ -1,0 +1,13 @@
+
+# InjelliJ / PyCharm
+**/*.idea
+**/*target
+**/*.iml
+
+# General stuff
+**/logs
+*.db
+
+# Apps
+Profiles
+

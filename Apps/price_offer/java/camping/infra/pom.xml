@@ -1,0 +1,53 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.ygsoft.apps.offroad-camping</groupId>
+    <artifactId>infra</artifactId>
+
+    <parent>
+        <groupId>com.ygsoft.apps</groupId>
+        <artifactId>offroad-camping</artifactId>
+        <version>3.0.0</version>
+    </parent>
+    
+    <dependencies>
+
+        <!-- Logging -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+        </dependency>
+
+        <!-- Unit tests-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- JSON parser  -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
+
+        <!--  external utilities  -->
+        <dependency>
+            <groupId>com.ygsoft.apps</groupId>
+            <artifactId>utils-and-wrappers</artifactId>
+        </dependency>
+
+        <!-- SQLite database -->
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+        </dependency>
+    </dependencies>
+</project>

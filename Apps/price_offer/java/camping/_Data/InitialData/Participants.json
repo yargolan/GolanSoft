@@ -1,0 +1,29 @@
+{
+  "participants":
+  [
+    {
+      "name":"אהרוני דרור",
+      "email":"dror.aharoni@gmail.com",
+      "initials":"DA",
+      "vehicle_index":31
+    },
+    {
+      "name":"גולן ירון",
+      "email":"yargolan@gmail.com",
+      "initials":"YG",
+      "vehicle_index":50
+    },
+    {
+      "name":"ורסנו איציק",
+      "email":"Izack@varsanno.com",
+      "initials":"VI",
+      "vehicle_index":50
+    },
+    {
+      "name":"ורסנו שמוליק",
+      "email":"shmulik@varsanno.com",
+      "initials":"VS",
+      "vehicle_index":51
+    }
+  ]
+}

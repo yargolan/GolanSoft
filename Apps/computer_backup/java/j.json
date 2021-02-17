@@ -1,0 +1,8 @@
+{
+  "items": [
+    "A",
+    "B"
+  ],
+  "name": "ProfileName",
+  "targetFolder": "/var/tmp/backup"
+}

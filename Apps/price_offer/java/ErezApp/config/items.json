@@ -1,0 +1,97 @@
+{
+  "Side steps": {
+    "AS_2pts": {"make": "Asfir",  "model": "Toy150_2pts", "price": 2340},
+    "AS_3pts": {"make": "Asfir",  "model": "Toy150_3pts", "price": 2500}
+  },
+  "Winch": {
+    "WARN9500": {"make": "Warn",  "model": "9500lbs", "price": 6500},
+    "CH_cheap": {"make": "China", "model": "9500lbs", "price": 4500},
+    "CH_good":  {"make": "China", "model": "9500lbs", "price": 5500}
+  },
+  "Front bumper": {
+    "Toy150": {"make": "Asfir", "model": "Prado150", "price": 5000},
+    "RVL_Toy150": {"make": "Rival", "model": "Prado150", "price": 11500},
+    "RHINO_Toy150": {"make": "Rhino", "model": "Prado150", "price": 10500}
+  },
+  "rooftops": {
+    "Aluminum" : {
+      "make": "Generic",
+      "model": "Prado150",
+      "price": 2000
+    },
+    "Rocks" : {
+      "make": "Rocks",
+      "model": "Prado150",
+      "price": 5000
+    },
+    "Rivalflat" : {
+      "make": "rival",
+      "model": "flat",
+      "price": 2400
+    },
+    "Rivalbasket" : {
+      "make": "rival",
+      "model": "basket",
+      "price": 2900
+    }
+  },
+  "tyres": {
+    "SSTPro": {
+      "make": "Cooper",
+      "model": "SST Pro",
+      "price": 700
+    },
+    "MTBaja": {
+      "make": "Mickey Thompson",
+      "model": "Baja ATZ P3",
+      "price": 850
+    },
+    "bfkm2": {
+      "make": "BFGoodrich",
+      "model": "KM2",
+      "price": 900
+    },
+    "bfko3": {
+      "make": "BFGoodrich",
+      "model": "KO2",
+      "price": 950
+    },
+    "bstone": {
+      "make": "Bridgestone",
+      "model": "bstone_1",
+      "price": 700
+    }
+  },
+  "suspension": {
+    "OldmanToy150": {
+      "make": "Oldman",
+      "model": "Prado_150",
+      "price": 8000
+    },
+    "BP51Toy150": {
+      "make": "OldMan",
+      "model": "Toy150",
+      "price": 14500
+    },
+    "dbndsnHD": {
+      "make": "Dobinsons",
+      "model": "Prado_150_HD",
+      "price": 6000
+    },
+    "dbndsnWtanks": {
+      "make": "Dobinsons",
+      "model": "Prado_150_W_tanks",
+      "price": 12000
+    },
+    "fox25wtanks": {
+      "make": "Fox",
+      "model": "With external tank",
+      "price": 25000
+    },
+    "fox25wotanks": {
+      "make": "Fox",
+      "model": "Without external tank",
+      "price": 14500
+    }
+  }
+}
