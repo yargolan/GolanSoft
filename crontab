@@ -1,0 +1,5 @@
+# Check connectivity to Google DNS server. Run every minute
+* * * * * /opt/ws/YG/git_ws/GolanSoft/main/Apps/Connectivity/ping_google_DNS_server.py
+
+# Summerize the daily connectivity checker. Run daily at 23:59
+59 23 * * * /opt/ws/YG/git_ws/GolanSoft/main/Apps/Connectivity/daily_ping_summary.py
