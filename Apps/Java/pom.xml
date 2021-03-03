@@ -16,8 +16,8 @@
 
     <modules>
         <module>mp3-tags</module>
-        <module>utils-and-wrappers</module>
         <module>dir-compare</module>
+        <module>utils-and-wrappers</module>
     </modules>
 
 
