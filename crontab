@@ -1,5 +1,8 @@
+# Set the root folder
+root_folder=/opt/ws/YG/git_ws/GolanSoft/main/Apps/Connectivity
+
 # Check connectivity to Google DNS server. Run every minute
-* * * * * /opt/ws/YG/git_ws/GolanSoft/main/Apps/Connectivity/ping_google_DNS_server.py
+* * * * * ${root_folder}/ping_google_DNS_server.py
 
 # Summerize the daily connectivity checker. Run daily at 23:59
-59 23 * * * /opt/ws/YG/git_ws/GolanSoft/main/Apps/Connectivity/daily_ping_summary.py
+59 23 * * * ${root_folder}/daily_ping_summary.py
