@@ -86,6 +86,8 @@ def main(source_folder, target_folder):
 
 if __name__ == '__main__':
     if len(sys.argv) == 3:
-        main(sys.argv[1], sys.argv[2])
+        s_folder = sys.argv[1]
+        t_folder = sys.argv[2]
+        main(s_folder, t_folder)
     else:
-        sys.exit(f"Usage: {sys.argv[0]}  <Source folder / file>  <Target dir>")
+        sys.exit(f"Usage: {sys.argv[0]}  <Source folder / file>  <Target folder>")
