@@ -66,6 +66,17 @@ public class ProfileUi {
 
 
         // Add action listeners for the buttons.
+        bAddItem.addActionListener(e->{
+            JFileChooser chooser = new JFileChooser();
+            chooser.setDialogTitle("Select item to backup");
+            chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+            int returnVal = chooser.showOpenDialog(null);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                taItems.append(chooser.getSelectedFile().getAbsolutePath() + "\n");
+            }
+        });
+
+
         bSave.addActionListener(e->{
 
             // Read the profile's name.
@@ -101,6 +112,7 @@ public class ProfileUi {
             p.create(profileName, profileDesc, itemsList);
             p.save();
             f.dispose();
+            Messages.showMessage(Messages.MESSAGE_INF, "The profile created successfully.");
         });
 
         f.setVisible(true);
