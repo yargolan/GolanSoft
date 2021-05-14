@@ -10,8 +10,10 @@ import com.google.gson.*;
 
 public class Profile {
 
-    public Profile() {}
+    DataSingleton dataSingleton = DataSingleton.getInstance();
 
+
+    public Profile() {}
 
 
     public void create (String profileName, String profileDescription, List<String> itemsForBackup) {
@@ -23,10 +25,11 @@ public class Profile {
             map.put("items", itemsForBackup);
 
             // create the profile.
-            File profileFile = new File (String.format("%s/profiles/%s.json",
-                    new File("..").getCanonicalFile(),
+            File profileFile = new File (String.format("%s/%s.json",
+                    dataSingleton.getProfilesRootDir(),
                     profileName
             ));
+
 
             if (! profileFile.getParentFile().isDirectory()) {
                 if (! profileFile.getParentFile().mkdirs()) {

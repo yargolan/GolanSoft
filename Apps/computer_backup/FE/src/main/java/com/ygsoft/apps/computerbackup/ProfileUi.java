@@ -112,7 +112,9 @@ public class ProfileUi {
             p.create(profileName, profileDesc, itemsList);
             p.save();
             f.dispose();
-            Messages.showMessage(Messages.MESSAGE_INF, "The profile created successfully.");
+            Messages.showMessage(Messages.MESSAGE_INF,
+                    String.format("The profile '%s' created successfully.", profileName)
+            );
         });
 
         f.setVisible(true);
@@ -121,6 +123,9 @@ public class ProfileUi {
 
 
     void run() {
+
+        // Get the list of profiles.
+
 
         JFrame f = new JFrame("Create a new profile");
         f.setSize(600, 200);
