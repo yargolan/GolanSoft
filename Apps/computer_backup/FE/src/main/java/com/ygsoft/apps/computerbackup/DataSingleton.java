@@ -15,9 +15,11 @@ public class DataSingleton {
     private DataSingleton() {
 
         try {
-            File profilesDir = new File(String.format("%s/profiles",
-                    new File("..").getCanonicalFile()
-            ));
+            File rootDir     = new File("..").getCanonicalFile();
+            File beRootDir   = new File(String.format("%s/BE", rootDir));
+            File profilesDir = new File(String.format("%s/profiles", rootDir));
+            data.put("root_dir",     rootDir.getAbsolutePath());
+            data.put("be_root_dir",  beRootDir.getAbsolutePath());
             data.put("profiles_dir", profilesDir.getAbsolutePath());
         }
         catch (IOException e) {
@@ -29,6 +31,18 @@ public class DataSingleton {
     public File getProfilesRootDir() {
         return new File(data.getOrDefault("profiles_dir", "."));
     }
+
+
+    public File getRootDir() {
+        return new File(data.getOrDefault("root_dir", "."));
+    }
+
+
+    public File getBeRootDir() {
+        return new File(data.getOrDefault("be_root_dir", "."));
+    }
+
+
 
 
     public static DataSingleton getInstance() {

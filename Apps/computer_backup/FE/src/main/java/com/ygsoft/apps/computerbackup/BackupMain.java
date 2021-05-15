@@ -1,6 +1,5 @@
 package com.ygsoft.apps.computerbackup;
 
-import java.io.File;
 import java.net.URL;
 import javax.swing.*;
 import javax.imageio.ImageIO;
@@ -9,6 +8,8 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import com.google.gson.*;
+
 
 
 

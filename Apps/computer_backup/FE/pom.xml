@@ -31,7 +31,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.ygsoft.apps.pcbackup.ComputerBackup</mainClass>
+                            <mainClass>com.ygsoft.apps.computerbackup.BackupMain</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
