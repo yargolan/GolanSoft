@@ -1,12 +1,12 @@
 package com.ygsoft.apps.computerbackup;
 
-import com.google.gson.Gson;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.Writer;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import com.google.gson.Gson;
 
 
 
@@ -42,33 +42,33 @@ public class Profile {
 
 
 
-    public void save(){
-        try {
-            // create the profile name.
-            File profileFile = new File(String.format("%s/%s.json",
-                    dataSingleton.getProfilesRootDir(),
-                    this.name
-            ));
+    public void save() {
+
+        // create the profile name.
+        File profileFile = new File(String.format("%s/%s.json",
+                dataSingleton.getProfilesRootDir(),
+                this.name
+        ));
 
 
-            if (!profileFile.getParentFile().isDirectory()) {
-                if (!profileFile.getParentFile().mkdirs()) {
-                    Messages.showMessage(Messages.MESSAGE_ERR, "Cannot create the profiles dir.");
-                    return;
-                }
+        if (!profileFile.getParentFile().isDirectory()) {
+            if (!profileFile.getParentFile().mkdirs()) {
+                Messages.showMessage(Messages.MESSAGE_ERR, "Cannot create the profiles dir.");
+                return;
             }
+        }
 
-            Writer writer = new FileWriter(profileFile.getAbsolutePath());
 
-            // convert map to JSON File
-            new Gson().toJson(profileData, writer);
+        // convert map to JSON File
+        try(FileWriter writer = new FileWriter(profileFile.getAbsolutePath())) {
+            Gson gson = new Gson();
+            gson.toJson(profileData, writer);
 
             // close the writer
             writer.close();
-
         }
-        catch (Exception ex) {
-            ex.printStackTrace();
+        catch(IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -78,7 +78,7 @@ public class Profile {
 
         File beDir = dataSingleton.getBeRootDir();
 
-        ProcessBuilder pb = new ProcessBuilder("python3", "--version");
+        ProcessBuilder pb = new ProcessBuilder("python3", "./computer_backup.py");
 
         pb.directory(beDir);
 
