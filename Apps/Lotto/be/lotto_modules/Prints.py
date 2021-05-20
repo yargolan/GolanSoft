@@ -8,5 +8,5 @@ def exit_with_error(error_message):
 
 
 
-def print_usage(app_name):
+def exit_with_usage(app_name):
     exit_with_error(f"Usage: {app_name}  [load  | guess]")

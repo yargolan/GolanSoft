@@ -6,8 +6,6 @@ from lotto_modules import Prints
 
 
 
-
-
 def get_user_action():
 
     if len(sys.argv) == 2:
