@@ -1,0 +1,1 @@
+1. Set a config file in which the user can set his name if it is different than the system name
