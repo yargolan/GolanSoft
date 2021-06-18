@@ -1,6 +1,5 @@
-package com.ygsoft.apps;
+package com.golansoft.apps.computerbackup;
 
-import com.ygsoft.apps.computerbackup.DataSingleton;
 import org.junit.Test;
 
 import static org.junit.Assert.assertNotEquals;

@@ -32,19 +32,6 @@ public class Messages {
 
 
 
-    public static void info(String message) {
-        showMessage(MESSAGE_INF, message);
-    }
-
-
-
-    public static void error(String message) {
-        message = (message == null || message.isEmpty()) ? "Internal error" : message;
-        showMessage(MESSAGE_ERR, message);
-    }
-
-
-
     static void showMessage(int messageType, String message) {
 
         if (messageType == MESSAGE_ERR) {
@@ -75,6 +62,12 @@ public class Messages {
                 JOptionPane.YES_NO_OPTION
         );
         return selectedOption == 0;
+    }
+
+
+    public static void internalError(String message) {
+        showMessage(MESSAGE_ERR, "Internal error occurred:\n" + message);
+
     }
 }
 
