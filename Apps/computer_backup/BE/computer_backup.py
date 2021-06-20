@@ -1,10 +1,52 @@
 import os
 import sys
 import json
+import argparse
 from shutil import copy2
 from Checksums import get_checksum
 
 
+
+def print_usage():
+    print()
+    print(f"Usage: {sys.argv[0]}  <profile file>")
+    print()
+    sys.exit(2)
+
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Process some integers.')
+    parser.add_argument('integers', metavar='N', type=int, nargs='+',
+                        help='an integer for the accumulator')
+    parser.add_argument('--sum', dest='accumulate', action='store_const',
+                        const=sum, default=max,
+                        help='sum the integers (default: find the max)')
+
+    args = parser.parse_args()
+    print(args.accumulate(args.integers))
+
+
+
+
+
+"""
+    if len(sys.argv) == 4:
+
+        if profile_file == "-h" or profile_file == "--h":
+            print_usage()
+        elif profile_file == "-help" or profile_file == "--help":
+            print_usage()
+        else:
+            if profile_file == "-file":
+                profile_file = sys.argv[1]
+            else:
+                print_usage()
+    else:
+        print_usage()
+
+
+""
 def run_backup(file):
 
     # Read the profile file
@@ -50,34 +92,4 @@ def backup_item(source_item, target_folder):
                 return
     else:
         #backup_item(source_item, target_file_full_path)
-
-
-
-def print_usage():
-    print()
-    print(f"Usage: {sys.argv[0]}  <profile file>")
-    print()
-    sys.exit(2)
-
-
-
-if __name__ == '__main__':
-    if len(sys.argv) == 1:
-        profile = input("Insert the profile file full path: ")
-    else:
-        profile_file = sys.argv[1]
-        if profile_file == "-h" or profile_file == "--h":
-            print_usage()
-        elif profile_file == "-help" or profile_file == "--help":
-            print_usage()
-        else:
-            print("Profile file:", profile_file)
-
-        # Verify that the file exists.
-        if not os.path.isfile(profile_file):
-            print(f"The profile file provided ({profile_file}) is invalid.")
-            print_usage()
-
-        # Run the backup
-        run_backup(profile_file)
-
+"""
