@@ -1,9 +1,11 @@
-package com.ygsoft.apps.computerbackup;
+package com.golansoft.apps.computerbackup;
+
 
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.HashMap;
-
+import com.jcabi.manifests.Manifests;
 
 
 public class DataSingleton {
@@ -21,9 +23,18 @@ public class DataSingleton {
             data.put("root_dir",     rootDir.getAbsolutePath());
             data.put("be_root_dir",  beRootDir.getAbsolutePath());
             data.put("profiles_dir", profilesDir.getAbsolutePath());
+            data.put("user_name",    System.getProperty("user.name"));
+            data.put("host_name",    InetAddress.getLocalHost().getHostName());
         }
         catch (IOException e) {
             Messages.showMessage(Messages.MESSAGE_ERR, "Cannot determine the profiles dir.");
+        }
+
+        try {
+            data.put("version",      Manifests.read("version"));
+        }
+        catch (Exception e) {
+            data.put("version", "Unknown");
         }
     }
 
@@ -43,6 +54,22 @@ public class DataSingleton {
     }
 
 
+
+    public String getUserName() {
+        return data.getOrDefault("user_name", "unknown");
+    }
+
+
+
+    public String getHostName() {
+        return data.getOrDefault("host_name", "unknown");
+    }
+
+
+
+    public String getAppVersion() {
+        return data.getOrDefault("version", "Unknown");
+    }
 
 
     public static DataSingleton getInstance() {

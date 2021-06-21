@@ -1,5 +1,5 @@
 # Set the root folder
-root_folder=/opt/ws/YG/git_ws/GolanSoft/main/Apps/Connectivity
+root_folder=/opt/git_ws/YG/repos/GolanSoft/main/Apps/Connectivity
 
 # Check connectivity to Google DNS server. Run every minute
 * * * * * ${root_folder}/ping_google_DNS_server.py
