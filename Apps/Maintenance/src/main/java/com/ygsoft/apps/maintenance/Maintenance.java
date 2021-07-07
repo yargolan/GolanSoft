@@ -1,5 +1,6 @@
 package com.ygsoft.apps.maintenance;
 
+import com.ygsoft.apps.DateAndTime;
 import com.ygsoft.apps.Messages;
 import com.ygsoft.apps.ui.UiWrapper;
 import javax.swing.*;
@@ -11,7 +12,7 @@ public class Maintenance {
     private final UiWrapper   uiWrapper = new UiWrapper();
     private final InitialData data      = new InitialData();
 
-    private JComboBox<String> ddGarageName = new JComboBox<>();
+    private final JComboBox<String> ddGarageName = new JComboBox<>();
 
 
 
@@ -33,28 +34,47 @@ public class Maintenance {
 
 
         // Date
-        JLabel lDate      = new JLabel(HcMaint.L_MAINTENANCE_DATE.getText());
-        JTextField tfDate = new JTextField();
-        tfDate.setBounds(130, 20, 150, 20);
-        lDate.setBounds (300, 20, 80, 20);
+        JLabel lDate           = new JLabel(HcMaint.L_MAINTENANCE_DATE.getText());
+        JTextField tfDateDay   = new JTextField();
+        JTextField tfDateYear  = new JTextField();
+        JTextField tfDateMonth = new JTextField();
+        JButton bToday         = new JButton(HcMaint.B_TODAY.getText());
+        tfDateDay.setBounds  (130, 20, 50, 25);
+        tfDateYear.setBounds (230, 20, 50, 25);
+        tfDateMonth.setBounds(180, 20, 50, 25);
+        lDate.setBounds      (300, 20, 80, 25);
+        bToday.setBounds     (30,  20, 90, 20);
+
+        tfDateDay.setText  (HcMaint.T_DAY.getText());
+        tfDateYear.setText (HcMaint.T_YEAR.getText());
+        tfDateMonth.setText(HcMaint.T_MONTH.getText());
+
         container.add(lDate);
-        container.add(tfDate);
+        container.add(tfDateDay);
+        container.add(tfDateYear);
+        container.add(tfDateMonth);
+        container.add(bToday);
+
+        bToday.addActionListener(e-> {
+            tfDateDay.setText(DateAndTime.getTodayDay());
+            tfDateYear.setText(DateAndTime.getTodayYear());
+            tfDateMonth.setText(DateAndTime.getTodayMonth());
+        });
 
 
         // Garage name
         JLabel lGarageName             = new JLabel(HcMaint.L_GARAGE_NAME.getText());
-        lGarageName.setBounds (300, 50, 80, 20);
-        ddGarageName.setBounds(130, 50, 150, 20);
+        JButton bNewGarage = new JButton(HcMaint.B_ADD_NEW.getText());
+
+        bNewGarage.setBounds  (30, 60, 90, 20);
+        lGarageName.setBounds (300,60, 80, 25);
+        ddGarageName.setBounds(130,60, 150,25);
+
         container.add(lGarageName);
         container.add(ddGarageName);
         for(String name : data.getGarageNames()) {
             ddGarageName.addItem(name);
         }
-
-
-        // Add new garage
-        JButton bNewGarage = new JButton(HcMaint.B_ADD_NEW.getText());
-        bNewGarage.setBounds (30, 50, 90, 20);
         container.add(bNewGarage);
         bNewGarage.addActionListener(e->addNewGarage());
 

@@ -4,6 +4,10 @@ enum HcMaint {
 
     B_TODAY           ("היום"),
 
+    T_DAY  ("יום"),
+    T_YEAR ("שנה"),
+    T_MONTH("חודש"),
+
     F_TITLE_GARAGE_NEW("הוספת מוסך לרשימה"),
 
     L_GARAGE_NAME     ("שם המוסך"),
