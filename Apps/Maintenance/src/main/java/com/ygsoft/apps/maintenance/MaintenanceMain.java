@@ -49,7 +49,7 @@ public class MaintenanceMain {
 
 
     private void alMaintAdd() {
-        Maintenance m = new Maintenance();
+        MaintenanceUi m = new MaintenanceUi();
         m.maintenanceAdd();
     }
 

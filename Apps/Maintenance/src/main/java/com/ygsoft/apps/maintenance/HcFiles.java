@@ -1,8 +1,8 @@
 package com.ygsoft.apps.maintenance;
 
 enum HcFiles {
-    DIR_DATA("Data"),
-    FILE_GARAGES("Data/garages.json"),
+    FILE_GARAGES     ("Data/garages.json"),
+    FILE_MAINTENANCES("Data/maintenances.json"),
     ;
 
     private final String theText;
