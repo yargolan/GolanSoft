@@ -12,3 +12,6 @@
 Profiles
 **/Data/**
 
+# Python
+**/venv/**
+**/__pycache__/**
