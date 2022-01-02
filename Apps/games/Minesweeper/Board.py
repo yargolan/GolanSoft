@@ -124,3 +124,4 @@ class Board:
 # Static
 def is_in_range(point):
     return 0 <= point.get_x() < BOARD_SIZE and 0 <= point.get_y() < BOARD_SIZE
+
