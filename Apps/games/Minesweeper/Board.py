@@ -20,8 +20,14 @@ class Board:
         self.init_board()
         
         # Set the mines
-        self.mines_left = round(BOARD_SIZE * BOARD_SIZE / 5)
-        self.set_mines()
+        self.total_mines = round(BOARD_SIZE * BOARD_SIZE / 5)
+        self.mines_left  = self.total_mines
+        self.init_mines()
+
+        # Tell the user about the board's size
+        print()
+        print("Board size =", BOARD_SIZE)
+        print()
 
 
     def init_board(self):
@@ -32,22 +38,19 @@ class Board:
             self.board.append(line)
 
 
-    def set_mines(self):
+    def init_mines(self):
 
-        mines_set = 0
+        amount_of_mines_set = 0
 
-        while mines_set < self.mines_left:
-
+        while amount_of_mines_set < self.total_mines:
             r = random.randint(0, BOARD_SIZE - 1)
             c = random.randint(0, BOARD_SIZE - 1)
             if self.board[r][c] == " ":
                 self.board[r][c] = "*"
-                mines_set = mines_set + 1
+                amount_of_mines_set = amount_of_mines_set + 1
 
 
     def print_it(self, reveal_mines=False):
-
-        # mines_left = 0
 
         # Print header.
         print()
@@ -59,18 +62,14 @@ class Board:
             print("---+", end="")
         print()
 
-
         # Walk over the board
         for r in range(BOARD_SIZE):
-
             print(f"{r}|", end="")
 
             for c in range(BOARD_SIZE):
-
                 current_cell = self.board[r][c]
 
                 if current_cell == "*":
-                    # mines_left += 1
                     if reveal_mines:
                         current_cell = "*"
                     else:
@@ -78,9 +77,7 @@ class Board:
 
                 print(f" {current_cell} |", end="")
             print()
-        # print(f"There are {mines_left} mines left.")
-        print()
-        
+
 
     def is_solved(self):
         return self.mines_left == 0
@@ -88,7 +85,7 @@ class Board:
 
     def is_mine(self, point):
         x = self.board[point.get_x()][point.get_y()]
-        return x == "*"
+        return x == "*" or x == "?"
 
 
     def clear_around(self, point):
@@ -118,10 +115,20 @@ class Board:
 
 
     def set_mine_at(self, user_point):
+        cell_content = self.board[user_point.get_x()][user_point.get_y()]
+        if cell_content == "*":
+            if self.mines_left < self.total_mines:
+                self.mines_left -= 1
         self.board[user_point.get_x()][user_point.get_y()] = "?"
+
+
+    def clear_mine_at(self, user_point):
+        cell_content = self.board[user_point.get_x()][user_point.get_y()]
+        if cell_content == "?":
+            self.mines_left += 1
+        self.board[user_point.get_x()][user_point.get_y()] = " "
 
 
 # Static
 def is_in_range(point):
     return 0 <= point.get_x() < BOARD_SIZE and 0 <= point.get_y() < BOARD_SIZE
-

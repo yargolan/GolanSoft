@@ -8,13 +8,14 @@ def get_user_choice():
 
     choice = -1
 
-    while choice < 0 or choice > 3:
+    while choice < 0 or choice > 4:
         print()
         print("Enter your choice:")
         print("0. Give up")
         print("1. Guess a spot")
         print("2. Mark as mine")
-        print("3. Show the board")
+        print("3. Clear cell")
+        print("4. Show the board")
         choice = int(input("?: ").replace(" ", ""))
     return choice
 
@@ -50,6 +51,12 @@ def main():
             print(f"There are {play_board.get_mines_left()} mines left.")
             board_solved = play_board.is_solved()
         elif user_choice == 3:
+            raw = input("Location: ")
+            raw = raw.replace(" ", "")
+            user_point = Point(int(raw.split(",")[0]), int(raw.split(",")[1]))
+            play_board.clear_mine_at(user_point)
+            play_board.print_it(False)
+        elif user_choice == 4:
             play_board.print_it(True)
         else:
             board_solved = False

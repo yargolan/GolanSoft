@@ -1,8 +1,6 @@
 
 def boom():
-    print(" *                                                    *")
-    print("   *                                                *")
-    print("     *                                            *")
+    print()
     print("         BBBB     OOOO      OOOO    M     M   !!!")
     print("         B   B   O    O    O    O   MM   MM   !!!")
     print("         B   B   O    O    O    O   M M M M   !!!")
@@ -10,9 +8,6 @@ def boom():
     print("         B   B   O    O    O    O   M     M   !!!")
     print("         B   B   O    O    O    O   M     M   !!!")
     print("         BBBB     OOOO      OOOO    M     M   !!!")
-    print("     *                                            *")
-    print("   *                                                *")
-    print(" *                                                    *")
     print()
 
 
