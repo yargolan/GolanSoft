@@ -97,17 +97,25 @@ class Board:
             self.print_it(reveal_mines=True)
             print(f"There are {self.mines_left} mines left.")
             sys.exit(1)
-        else:
-            for i in range(point.get_x()-1, point.get_x()+2):
-                for j in range(point.get_y()-1, point.get_y()+2):
-                    current_cell = Point(j, i)
-                    if is_in_range(current_cell):
-                        cell_value = str(self.board[current_cell.get_x()][current_cell.get_y()])
-                        print(f"{i}/{j} - " + "{{" + cell_value + "}}")
-                        if self.is_mine(current_cell):
-                            current_cell_mines_around += 1
 
-        self.board[point.get_x()][point.get_y()] = current_cell_mines_around
+
+        c = point.get_x()
+        r = point.get_y()
+
+        for i in range(r-1, r+2):
+            for j in range(c-1, c+2):
+                print(f"Checking point {i}, {j}")
+                current_cell = Point(i, j)
+                if is_in_range(current_cell):
+                    cell_value = str(self.board[i][j])
+                    print(f"{i}/{j} - " + "{{" + cell_value + "}}")
+                    if self.is_mine(current_cell):
+                        current_cell_mines_around += 1
+                else:
+                    print(f"{i}/{j} - " + "{{out-of-range}}")
+
+        print(f"There are {current_cell_mines_around} mines around here")
+        self.board[r][c] = current_cell_mines_around
 
 
     def get_mines_left(self):
@@ -116,15 +124,17 @@ class Board:
 
     def set_mine_at(self, user_point):
         cell_content = self.board[user_point.get_x()][user_point.get_y()]
-        if cell_content == "*":
+        if cell_content == "*" or cell_content == "#":
+            self.board[user_point.get_x()][user_point.get_y()] = "#"
             if self.mines_left < self.total_mines:
                 self.mines_left -= 1
-        self.board[user_point.get_x()][user_point.get_y()] = "?"
+        else:
+            self.board[user_point.get_x()][user_point.get_y()] = "?"
 
 
-    def clear_mine_at(self, user_point):
+    def unset_mine_at(self, user_point):
         cell_content = self.board[user_point.get_x()][user_point.get_y()]
-        if cell_content == "?":
+        if cell_content == "#":
             self.mines_left += 1
         self.board[user_point.get_x()][user_point.get_y()] = " "
 

@@ -16,7 +16,10 @@ def get_user_choice():
         print("2. Mark as mine")
         print("3. Clear cell")
         print("4. Show the board")
-        choice = int(input("?: ").replace(" ", ""))
+        raw = input("?: ")
+        if raw.__contains__(" "):
+            raw = raw.replace(" ", "")
+        choice = int(raw)
     return choice
 
 
@@ -24,6 +27,7 @@ def main():
 
     # Set the board
     play_board = Board()
+    original_board = play_board
 
     board_solved = False
 
@@ -37,7 +41,9 @@ def main():
         elif user_choice == 1:
             raw = input("Location: ")
             raw = raw.replace(" ", "")
-            user_point = Point(int(raw.split(",")[0]), int(raw.split(",")[1]))
+            col = int(raw.split(",")[0])
+            row = int(raw.split(",")[1])
+            user_point = Point(row, col)
             play_board.clear_around(user_point)
             play_board.print_it(False)
             print(f"There are {play_board.get_mines_left()} mines left.")
@@ -54,7 +60,7 @@ def main():
             raw = input("Location: ")
             raw = raw.replace(" ", "")
             user_point = Point(int(raw.split(",")[0]), int(raw.split(",")[1]))
-            play_board.clear_mine_at(user_point)
+            play_board.unset_mine_at(user_point)
             play_board.print_it(False)
         elif user_choice == 4:
             play_board.print_it(True)
@@ -65,37 +71,3 @@ def main():
 if __name__ == '__main__':
 
     main()
-
-    # user_choice = get_user_choice()
-    # print(user_choice)
-    # board = Board()
-    # while not board.is_solved():
-    #     board.print_it()
-    #
-    #     user_choice = get_user_choice()
-    #
-    #     if user_choice == 0:
-    #         board.print_it(reveal_mines=True)
-    #         sys.exit(0)
-    #     elif user_choice == 1:
-    #         raw = input("Location: ")
-    #         guess_r = int(raw.split(",")[0])
-    #         guess_c = int(raw.split(",")[1])
-    #         if 0 <= guess_c < board.size and 0 <= guess_r < board.size:
-    #             p = Point(guess_r, guess_c)
-    #             if board.is_mine(p):
-    #                 GameFinish.boom()
-    #                 board.print_it(reveal_mines=True)
-    #                 sys.exit(1)
-    #             else:
-    #                 p = Point(guess_c, guess_r)
-    #                 board.clear_around(p)
-    #     elif user_choice == 2:
-    #         raw = input("Location: ")
-    #         guess_r = int(raw.split(",")[0])
-    #         guess_c = int(raw.split(",")[1])
-    #         p = Point(guess_r, guess_c)
-    #         if 0 <= p.get_x() < board.size and 0 <= p.get_y() < board.size:
-    #             board.mark_as_mine(p)
-    #     else:
-    #         print("Illegal choice")
