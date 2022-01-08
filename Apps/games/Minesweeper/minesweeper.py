@@ -1,5 +1,5 @@
 import sys
-from Board import Board
+from BoardOld import BoardOld
 from Point import Point
 
 
@@ -26,7 +26,7 @@ def get_user_choice():
 def main():
 
     # Set the board
-    play_board = Board()
+    play_board = BoardOld()
     original_board = play_board
 
     board_solved = False

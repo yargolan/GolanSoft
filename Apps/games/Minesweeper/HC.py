@@ -1,4 +1,4 @@
 
-MARK  = "?"
-MINE  = "*"
+MARK = "?"
+MINE = "*"
 EMPTY = " "
