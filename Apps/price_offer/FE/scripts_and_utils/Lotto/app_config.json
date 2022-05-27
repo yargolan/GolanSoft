@@ -1,0 +1,8 @@
+{
+  "numbers_to_display": 7,
+  "starting_year": 2000,
+  "maximal_number": 37,
+  "lotto_web_site_url": "https://www.pais.co.il/lotto",
+  "previous_draws_results": "lotto_draws.csv",
+  "relevant_draws_results": "filtered_lotto_draws.csv"
+}

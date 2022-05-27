@@ -1,0 +1,7 @@
+{
+  "draw_result_url": "https://www.pais.co.il/lotto/archive.aspx",
+  "draw_results_file_name": "Lotto.csv",
+  "minimal_year": 2000,
+  "initial_draw_number": 1841,
+  "amount_of_numbers_to_draw": 6
+}
