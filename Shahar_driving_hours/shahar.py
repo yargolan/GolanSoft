@@ -93,10 +93,32 @@ def insert_data(current_drive):
         print("Odometer end cannot be lower the start.")
         return
 
-    current_drive['driven_kilometer'] = kilometers_driven
+    # Calculate the amount of time spent.
+    current_drive['driven_time'] = calculate_time_driven(current_drive['time_start'], current_drive['time_end'])
 
     print(current_drive)
 
+
+def calculate_time_driven(start, end):
+    a_end = end.split(':')
+    a_start = start.split(':')
+    minutes_end = int(a_end[0]) * 60 + int(a_end[1])
+    minutes_start = int(a_start[0]) * 60 + int(a_start[1])
+    delta = minutes_end - minutes_start
+
+    total_time = [0, 0]
+    if delta < 60:
+        total_time[1] = delta
+    else:
+        while delta >= 60:
+            total_time[0] += 1
+            delta -= 60
+        total_time[1] = delta
+
+    if total_time[0] < 10:
+        total_time[1] = "0" + str(total_time[1])
+    
+    return ":".join[total_time[0], total_time[1]]
 
 
 def get_date():
@@ -360,7 +382,6 @@ def run_ui():
 
     # Run the app
     root.mainloop()
-
 
 
 if __name__ == '__main__':
