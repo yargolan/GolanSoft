@@ -20,7 +20,8 @@ cfg = {
         "fg": "#0000ff"
     }
 }
-yes_no = ["כן", "לא"]
+yes_no = ["yes", "no"]
+data_file = "data.json"
 
 # Set the root TK object
 root = tk.Tk()
@@ -96,7 +97,12 @@ def insert_data(current_drive):
     # Calculate the amount of time spent.
     current_drive['driven_time'] = calculate_time_driven(current_drive['time_start'], current_drive['time_end'])
 
-    print(current_drive)
+    # Add the current drive to the list.
+    DataDumper dd = Datadumper()
+    dd.add(current_drive)
+
+    tk.messagebox.showinfo("", "Added successfully.")
+    run_ui()
 
 
 def calculate_time_driven(start, end):
@@ -390,6 +396,16 @@ if __name__ == '__main__':
 
     # Run the UI part.
     try:
-        run_ui()
+        d = {
+            "date": "DATE",
+            "urban": True,
+            "time_end": "12:12",
+            "non_urban": False,
+            "time_start": "11:11",
+            "odometer_end": "33333",
+            "odometer_start": "22222"
+        }
+        insert_data(d)
+        # run_ui()
     except KeyboardInterrupt as ke:
         print("Interrupted by the user...")
