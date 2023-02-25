@@ -116,9 +116,11 @@ def calculate_time_driven(start, end):
         total_time[1] = delta
 
     if total_time[0] < 10:
-        total_time[1] = "0" + str(total_time[1])
-    
-    return ":".join[total_time[0], total_time[1]]
+        total_time[0] = "0{0}".format(str(total_time[0]))
+    if total_time[1] < 10:
+        total_time[1] = "0{0}".format(str(total_time[1]))
+
+    return "{0}:{1}".format(total_time[0], total_time[1])
 
 
 def get_date():
