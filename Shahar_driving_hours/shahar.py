@@ -2,6 +2,7 @@ import re
 import tkinter as tk
 from datetime import date
 from CreateButton import create_button
+from DataDumper import DataDumper
 
 
 cfg = {
@@ -21,7 +22,7 @@ cfg = {
     }
 }
 yes_no = ["yes", "no"]
-data_file = "data.json"
+data_file = "data.csv"
 
 # Set the root TK object
 root = tk.Tk()
@@ -52,11 +53,11 @@ def insert_data(current_drive):
     if "odometer_end" not in current_drive:
         print("No start odometer provided.")
         return
-    if "non_urban" not in current_drive:
-        print("No non urban flag provided.")
-        return
     if "urban" not in current_drive:
         print("No urban flag provided.")
+        return
+    if "non_urban" not in current_drive:
+        print("No non urban flag provided.")
         return
 
     if current_drive['date'] is None or current_drive['date'] == "":
@@ -93,16 +94,23 @@ def insert_data(current_drive):
     if kilometers_driven <= 0:
         print("Odometer end cannot be lower the start.")
         return
+    else:
+        current_drive['driven_distance'] = str(kilometers_driven)
 
     # Calculate the amount of time spent.
     current_drive['driven_time'] = calculate_time_driven(current_drive['time_start'], current_drive['time_end'])
 
+    # convert the boolean flags into strings.
+    current_drive['urban'] = str(current_drive['urban'])
+    current_drive['non_urban'] = str(current_drive['non_urban'])
+
+
     # Add the current drive to the list.
-    DataDumper dd = Datadumper()
+    dd = DataDumper(data_file)
     dd.add(current_drive)
 
-    tk.messagebox.showinfo("", "Added successfully.")
-    run_ui()
+    # messagebox.showinfo("", "Added successfully.")
+    # run_ui()
 
 
 def calculate_time_driven(start, end):
@@ -406,6 +414,6 @@ if __name__ == '__main__':
             "odometer_start": "22222"
         }
         insert_data(d)
-        # run_ui()
+        run_ui()
     except KeyboardInterrupt as ke:
         print("Interrupted by the user...")

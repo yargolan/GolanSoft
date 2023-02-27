@@ -3,50 +3,32 @@ import os
 import csv
 
 
-
-
-
 class DataDumper:
 
     def __init__(self, db_file):
         self.db_file = db_file
+        self.field_names = ['date', 'time_start', 'time_end', 'driven_time', 'odometer_start', 'odometer_end',
+                            'driven_distance', 'urban', 'non-urban']
 
 
     def add(self, current_drive):
-
+        # Verify that the CSV file exists with the needed headers.
         if not os.path.isfile(self.db_file):
-            with open('employee_birthday.txt') as csv_file:
-                csv_reader = csv.reader(csv_file, delimiter = ',')
-                line_count = 0
-                for row in csv_reader:
-                    if line_count == 0:
-                        print(f'Column names are {", ".join(row)}')
-                        line_count += 1
-                    else:
-                        print(f'\t{row[0]} works in the {row[1]} department, and was born in {row[2]}.')
-                        line_count += 1
-                print(f'Processed {line_count} lines.')
+            with open(self.db_file, mode='w') as csv_file:
+                writer = csv.writer(csv_file, delimiter=",", quotechar='"', quoting=csv.QUOTE_MINIMAL)
+                writer.writerow(self.field_names)
 
-        # Now the file exists for sure.
-        with open(self.db_file) as csv_file:
-            csv_reader = csv.reader(csv_file, delimiter = ',')
-            line_count = 0
-            for row in csv_reader:
-                if line_count == 0:
-                    print(f'Column names are {", ".join(row)}')
-                    line_count += 1
-                else:
-                    print(f'\t{row[0]} works in the {row[1]} department, and was born in {row[2]}.')
-                    line_count += 1
-            print(f'Processed {line_count} lines.')
-
-
-
-        #     with open(data_file, "r") as d:
-        #         drives = json.load(d)
-        # else:
-        #     drives = []
-        # drives.append(current_drive)
-        #
-        # with open("data.json", "a") as d:
-        #     json.dump(IteratorAsList(current_drive), d, indent = 2, ensure_ascii = True)
+        # Add the current drive to the file.
+        with open(self.db_file, mode = 'a') as csv_file:
+            writer = csv.writer(csv_file, delimiter = ",", quotechar = '"', quoting = csv.QUOTE_MINIMAL)
+            writer.writerow(",".join([
+                current_drive['date'],
+                current_drive['time_start'],
+                current_drive['time_end'],
+                current_drive['driven_time'],
+                current_drive['odometer_start'],
+                current_drive['odometer_end'],
+                current_drive['driven_distance'],
+                current_drive['urban'],
+                current_drive['non_urban']
+            ]))
