@@ -1,8 +1,10 @@
 import re
+import os
+import json
+import tkinter
 import tkinter as tk
 from datetime import date
 from CreateButton import create_button
-from DataDumper import DataDumper
 
 
 cfg = {
@@ -22,7 +24,7 @@ cfg = {
     }
 }
 yes_no = ["yes", "no"]
-data_file = "data.csv"
+data_file = "drives.json"
 
 # Set the root TK object
 root = tk.Tk()
@@ -106,11 +108,25 @@ def insert_data(current_drive):
 
 
     # Add the current drive to the list.
-    dd = DataDumper(data_file)
-    dd.add(current_drive)
+    add_session(current_drive)
 
-    # messagebox.showinfo("", "Added successfully.")
-    # run_ui()
+    # tkinter.messagebox.showinfo("", "Added successfully.")
+    run_ui()
+
+
+def add_session(current_session):
+    if os.path.isfile("db.json"):
+        with open("db.json", "r") as db:
+            data = json.load(db)
+    else:
+        data = {"drives": []}
+
+    # Add current session
+    data['drives'].append(current_session)
+
+    # Write the file
+    with open("db.json", "w") as db:
+        json.dump(data, db, indent = 2)
 
 
 def calculate_time_driven(start, end):
@@ -404,16 +420,6 @@ if __name__ == '__main__':
 
     # Run the UI part.
     try:
-        d = {
-            "date": "DATE",
-            "urban": True,
-            "time_end": "12:12",
-            "non_urban": False,
-            "time_start": "11:11",
-            "odometer_end": "33333",
-            "odometer_start": "22222"
-        }
-        insert_data(d)
         run_ui()
     except KeyboardInterrupt as ke:
         print("Interrupted by the user...")
