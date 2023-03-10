@@ -1,7 +1,8 @@
+"""Small app to keep track over Shahar's driving hours"""
+
 import re
 import os
 import json
-import tkinter
 import tkinter as tk
 from datetime import date
 from CreateButton import create_button
@@ -23,18 +24,42 @@ cfg = {
         "fg": "#0000ff"
     }
 }
-yes_no = ["yes", "no"]
-data_file = "drives.json"
+YES_NO = ["yes", "no"]
+DATA_FILE = "drives.json"
 
 # Set the root TK object
 root = tk.Tk()
 
 
 def generate_report():
-    pass
+    """Generate a HTML report from the data stored"""
+
+    # Read the drives data
+    with open(DATA_FILE, "r", encoding="utf-8") as data_file:
+        data = json.load(data_file)
+    drives_data = data['drives']
+
+    # Read the report template file
+    with open("template.html", "r", encoding="utf-8") as template_file:
+        template = template_file.readlines()
+
+    # Create the report
+    report = []
+    for line in template:
+        if line == "<!--PH-->":
+            for drive in drives_data:
+                report.append("<tr>\n")
+                report.append("<td>" + drive['date'] + "</td>\n")
+        else:
+            report.append(line)
+
+    # Write the report
+    with open("report.html", "w", encoding="utf-8") as report_file:
+        report_file.writelines(report)
 
 
 def insert_data(current_drive):
+    """Set the drive data"""
 
     regex_time = re.compile('^\\d{2}:\\d{2}$')
     regex_odometer = re.compile('^\\d{1,6}$')
@@ -96,11 +121,13 @@ def insert_data(current_drive):
     if kilometers_driven <= 0:
         print("Odometer end cannot be lower the start.")
         return
-    else:
-        current_drive['driven_distance'] = str(kilometers_driven)
+    current_drive['driven_distance'] = str(kilometers_driven)
 
     # Calculate the amount of time spent.
-    current_drive['driven_time'] = calculate_time_driven(current_drive['time_start'], current_drive['time_end'])
+    current_drive['driven_time'] = calculate_time_driven(
+        current_drive['time_start'],
+        current_drive['time_end']
+    )
 
     # convert the boolean flags into strings.
     current_drive['urban'] = str(current_drive['urban'])
@@ -115,9 +142,10 @@ def insert_data(current_drive):
 
 
 def add_session(current_session):
-    if os.path.isfile("db.json"):
-        with open("db.json", "r") as db:
-            data = json.load(db)
+    """Add the current drive session"""
+    if os.path.isfile(DATA_FILE):
+        with open(DATA_FILE, "r", encoding="utf-8") as data_base:
+            data = json.load(data_base)
     else:
         data = {"drives": []}
 
@@ -125,11 +153,12 @@ def add_session(current_session):
     data['drives'].append(current_session)
 
     # Write the file
-    with open("db.json", "w") as db:
-        json.dump(data, db, indent = 2)
+    with open(DATA_FILE, "w", encoding="utf-8") as data_base:
+        json.dump(data, data_base, indent = 2)
 
 
 def calculate_time_driven(start, end):
+    """ Calculate how much time driven"""
     a_end = end.split(':')
     a_start = start.split(':')
     minutes_end = int(a_end[0]) * 60 + int(a_end[1])
@@ -146,19 +175,21 @@ def calculate_time_driven(start, end):
         total_time[1] = delta
 
     if total_time[0] < 10:
-        total_time[0] = "0{0}".format(str(total_time[0]))
+        total_time[0] = f"0{total_time[0]}"
     if total_time[1] < 10:
-        total_time[1] = "0{0}".format(str(total_time[1]))
+        total_time[1] = f"0{total_time[0]}"
 
-    return "{0}:{1}".format(total_time[0], total_time[1])
+    return f"{total_time[0]}:{total_time[1]}"
 
 
 def get_date():
+    """Get the formatted date of today"""
     today = date.today()
     return today.strftime("%d/%m/%Y")
 
 
 def ui_insert_data():
+    """Set the UI widget"""
     # Load the data insertion frame
     f_data_insertion = tk.Frame(
         root,
@@ -315,31 +346,31 @@ def ui_insert_data():
     # |   Drop-downs
     # +-----------------
     urban = tk.StringVar(f_data_insertion)
-    urban.set(yes_no[0])
-    w = tk.OptionMenu(
+    urban.set(YES_NO[0])
+    dd_urban = tk.OptionMenu(
         f_data_insertion,
         urban,
-        *yes_no
+        *YES_NO
     )
-    w.configure(width=12)
-    w.place(x=210, y=268)
+    dd_urban.configure(width=12)
+    dd_urban.place(x=210, y=268)
 
     non_urban = tk.StringVar(f_data_insertion)
-    non_urban.set(yes_no[0])
-    w = tk.OptionMenu(
+    non_urban.set(YES_NO[0])
+    dd_non_urban = tk.OptionMenu(
         f_data_insertion,
         non_urban,
-        *yes_no
+        *YES_NO
     )
-    w.configure(width=12)
-    w.place(x=210, y=318)
+    dd_non_urban.configure(width=12)
+    dd_non_urban.place(x=210, y=318)
 
     # +-----------------
     # |   Buttons
     # +-----------------
     # Back
     b_back = create_button("S", f_data_insertion, "חזרה")
-    b_back.configure(command=lambda: run_ui())
+    b_back.configure(command=run_ui())
     b_back.place(x=20, y=370)
 
     # Insert
@@ -364,6 +395,7 @@ def ui_insert_data():
 
 
 def run_ui():
+    """Run the main UI widget"""
     # Set the main frame's title.
     root.title = "מעקב שעות נהיגה של שחר"
 
@@ -404,12 +436,12 @@ def run_ui():
     # Data
     b_data = create_button("M", f_main, "הזנת נתונים")
     b_data.place(x=250, y=120)
-    b_data.configure(command=lambda: ui_insert_data())
+    b_data.configure(command=ui_insert_data())
 
     # Report
     b_report = create_button("M", f_main, "הפקת דוח")
     b_report.place(x=50, y=120)
-    b_report.configure(command=lambda: generate_report())
+    b_report.configure(command=generate_report())
 
 
     # Run the app
