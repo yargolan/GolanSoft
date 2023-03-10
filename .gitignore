@@ -17,4 +17,5 @@ Profiles
 **/__pycache__/**
 data.json
 **/db*.json
+report.html
 

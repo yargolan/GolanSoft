@@ -1,0 +1,37 @@
+{
+  "drives": [
+    {
+      "date": "21/02/2023",
+      "urban": "yes",
+      "time_end": "16:00",
+      "non_urban": "no",
+      "time_start": "15:00",
+      "odometer_end": "74875",
+      "odometer_start": "74854",
+      "driven_distance": "21",
+      "driven_time": "01:00"
+    },
+    {
+      "date": "04/03/2023",
+      "urban": "yes",
+      "time_end": "16:00",
+      "non_urban": "yes",
+      "time_start": "13:00",
+      "odometer_end": "75712",
+      "odometer_start": "75601",
+      "driven_distance": "111",
+      "driven_time": "03:00"
+    },
+    {
+      "date": "10/03/2023",
+      "urban": "yes",
+      "time_end": "10:30",
+      "non_urban": "yes",
+      "time_start": "07:30",
+      "odometer_end": "76243",
+      "odometer_start": "76143",
+      "driven_distance": "100",
+      "driven_time": "03:00"
+    }
+  ]
+}

@@ -5,6 +5,7 @@ import os
 import json
 import tkinter as tk
 from datetime import date
+
 from CreateButton import create_button
 
 
@@ -46,16 +47,26 @@ def generate_report():
     # Create the report
     report = []
     for line in template:
-        if line == "<!--PH-->":
+        if line.strip() == "<!--PH-->":
             for drive in drives_data:
-                report.append("<tr>\n")
-                report.append("<td>" + drive['date'] + "</td>\n")
+                report.append("\t<tr>\n")
+                report.append("\t\t<td>" + drive['date'] + "</td>\n")
+                report.append("\t\t<td>" + drive['time_start'] + "</td>\n")
+                report.append("\t\t<td>" + drive['time_end'] + "</td>\n")
+                report.append("\t\t<td>" + drive['driven_time'] + "</td>\n")
+                report.append("\t\t<td>" + drive['odometer_start'] + "</td>\n")
+                report.append("\t\t<td>" + drive['odometer_end'] + "</td>\n")
+                report.append("\t\t<td>" + drive['driven_distance'] + "</td>\n")
+                report.append("\t\t<td>" + drive['urban'] + "</td>\n")
+                report.append("\t\t<td>" + drive['non_urban'] + "</td>\n")
+                report.append("\t</tr>\n")
         else:
             report.append(line)
 
     # Write the report
     with open("report.html", "w", encoding="utf-8") as report_file:
         report_file.writelines(report)
+    print("The report created successfully.")
 
 
 def insert_data(current_drive):
@@ -370,7 +381,7 @@ def ui_insert_data():
     # +-----------------
     # Back
     b_back = create_button("S", f_data_insertion, "חזרה")
-    b_back.configure(command=run_ui())
+    b_back.configure(command=run_ui)
     b_back.place(x=20, y=370)
 
     # Insert
@@ -436,12 +447,12 @@ def run_ui():
     # Data
     b_data = create_button("M", f_main, "הזנת נתונים")
     b_data.place(x=250, y=120)
-    b_data.configure(command=ui_insert_data())
+    b_data.configure(command=ui_insert_data)
 
     # Report
     b_report = create_button("M", f_main, "הפקת דוח")
     b_report.place(x=50, y=120)
-    b_report.configure(command=generate_report())
+    b_report.configure(command=generate_report)
 
 
     # Run the app
