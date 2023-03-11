@@ -5,7 +5,6 @@ import os
 import json
 import tkinter as tk
 from datetime import date
-
 from CreateButton import create_button
 
 
@@ -46,9 +45,21 @@ def generate_report():
 
     # Create the report
     report = []
+    data['total_time'] = 0
+    data['total_distance'] = 0
     for line in template:
         if line.strip() == "<!--PH-->":
             for drive in drives_data:
+
+                # Add the total time and distance.
+                data['total_time'] += int(drive['driven_time'])
+                data['total_distance'] += (drive['driven_distance'])
+
+                # Convert the needed data
+                drive['driven_time'] = convert_minutes_to_time(drive['driven_time'])
+                drive['driven_distance'] = str(drive['driven_distance'])
+
+                # Set the data into the report.
                 report.append("\t<tr>\n")
                 report.append("\t\t<td>" + drive['date'] + "</td>\n")
                 report.append("\t\t<td>" + drive['time_start'] + "</td>\n")
@@ -60,8 +71,20 @@ def generate_report():
                 report.append("\t\t<td>" + drive['urban'] + "</td>\n")
                 report.append("\t\t<td>" + drive['non_urban'] + "</td>\n")
                 report.append("\t</tr>\n")
+
+            # Add the total values
+            data['total_time'] = convert_minutes_to_time(data['total_time'])
+            data['total_distance'] = str(data['total_distance'])
+            report.append("\t<tr>\n")
+            report.append("\t\t<td colspan=\"3\"><b>Total time</b></td>\n")
+            report.append("\t\t<td><b>" + data['total_time'] + "</b></td>\n")
+            report.append("\t\t<td colspan=\"2\"><b>Total distance</b></td>\n")
+            report.append("\t\t<td><b>" + data['total_distance'] + "</b></td>\n")
+            report.append("\t\t<td colspan=\"2\">Yaron Golan, yargolan@gmail.com</td>\n")
+            report.append("\t</tr>\n")
         else:
             report.append(line)
+
 
     # Write the report
     with open("report.html", "w", encoding="utf-8") as report_file:
@@ -132,7 +155,7 @@ def insert_data(current_drive):
     if kilometers_driven <= 0:
         print("Odometer end cannot be lower the start.")
         return
-    current_drive['driven_distance'] = str(kilometers_driven)
+    current_drive['driven_distance'] = int(kilometers_driven)
 
     # Calculate the amount of time spent.
     current_drive['driven_time'] = calculate_time_driven(
@@ -143,7 +166,6 @@ def insert_data(current_drive):
     # convert the boolean flags into strings.
     current_drive['urban'] = str(current_drive['urban'])
     current_drive['non_urban'] = str(current_drive['non_urban'])
-
 
     # Add the current drive to the list.
     add_session(current_drive)
@@ -168,27 +190,54 @@ def add_session(current_session):
         json.dump(data, data_base, indent = 2)
 
 
+def add_drive_time(current_time, added_time):
+    current = convert_time_to_minutes(current_time)
+    added_time = convert_time_to_minutes(added_time)
+    total = current + added_time
+    return total
+
+
+def convert_time_to_minutes(some_time):
+    return 60 * int(some_time.split(":")[0])  + int(some_time.split(":")[1])
+
+
+def convert_minutes_to_hours(minutes):
+    converted = {'hours': 0, 'minutes': 0}
+    while minutes >= 60:
+        converted['hours'] += 1
+        minutes -= 60
+    converted['minutes'] += minutes
+    return str(converted['hours']) + ":" + str(converted['minutes'])
+
+
 def calculate_time_driven(start, end):
     """ Calculate how much time driven"""
-    a_end = end.split(':')
-    a_start = start.split(':')
-    minutes_end = int(a_end[0]) * 60 + int(a_end[1])
-    minutes_start = int(a_start[0]) * 60 + int(a_start[1])
-    delta = minutes_end - minutes_start
+    time_end = convert_time_to_minutes(end)
+    time_start = convert_time_to_minutes(start)
+    return time_end - time_start
 
+
+def convert_minutes_to_time(minutes):
     total_time = [0, 0]
-    if delta < 60:
-        total_time[1] = delta
+    if minutes < 60:
+        total_time[1] = minutes
     else:
-        while delta >= 60:
+        while minutes >= 60:
             total_time[0] += 1
-            delta -= 60
-        total_time[1] = delta
+            minutes -= 60
+        total_time[1] = minutes
 
-    if total_time[0] < 10:
-        total_time[0] = f"0{total_time[0]}"
-    if total_time[1] < 10:
-        total_time[1] = f"0{total_time[0]}"
+    if total_time[0] == 0:
+        total_time[0] = "00"
+    else:
+        if 0 < total_time[0] < 10:
+            total_time[0] = f"0{total_time[0]}"
+
+    if total_time[1] == 0:
+        total_time[1] = "00"
+    else:
+        if 0 < total_time[1] < 10:
+            total_time[1] = f"0{total_time[0]}"
 
     return f"{total_time[0]}:{total_time[1]}"
 

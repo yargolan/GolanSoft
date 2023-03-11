@@ -8,8 +8,8 @@
       "time_start": "15:00",
       "odometer_end": "74875",
       "odometer_start": "74854",
-      "driven_distance": "21",
-      "driven_time": "01:00"
+      "driven_distance": 21,
+      "driven_time": 60
     },
     {
       "date": "04/03/2023",
@@ -19,8 +19,8 @@
       "time_start": "13:00",
       "odometer_end": "75712",
       "odometer_start": "75601",
-      "driven_distance": "111",
-      "driven_time": "03:00"
+      "driven_distance": 111,
+      "driven_time": 180
     },
     {
       "date": "10/03/2023",
@@ -30,8 +30,8 @@
       "time_start": "07:30",
       "odometer_end": "76243",
       "odometer_start": "76143",
-      "driven_distance": "100",
-      "driven_time": "03:00"
+      "driven_distance": 100,
+      "driven_time": 180
     },
     {
       "date": "11/03/2023",
@@ -41,8 +41,8 @@
       "time_start": "09:00",
       "odometer_end": "76580",
       "odometer_start": "76334",
-      "driven_distance": "246",
-      "driven_time": "05:30"
+      "driven_distance": 246,
+      "driven_time": 330
     }
   ]
 }
