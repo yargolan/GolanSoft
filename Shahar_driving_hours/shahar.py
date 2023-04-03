@@ -2,6 +2,7 @@
 
 import re
 import os
+import sys
 import json
 import tkinter as tk
 from datetime import date
@@ -60,16 +61,18 @@ def generate_report():
                 drive['driven_distance'] = str(drive['driven_distance'])
 
                 # Set the data into the report.
+                t_d = "</td>\n"
+                tab_td = "\t\t<td>"
                 report.append("\t<tr>\n")
-                report.append("\t\t<td>" + drive['date'] + "</td>\n")
-                report.append("\t\t<td>" + drive['time_start'] + "</td>\n")
-                report.append("\t\t<td>" + drive['time_end'] + "</td>\n")
-                report.append("\t\t<td>" + drive['driven_time'] + "</td>\n")
-                report.append("\t\t<td>" + drive['odometer_start'] + "</td>\n")
-                report.append("\t\t<td>" + drive['odometer_end'] + "</td>\n")
-                report.append("\t\t<td>" + drive['driven_distance'] + "</td>\n")
-                report.append("\t\t<td>" + drive['urban'] + "</td>\n")
-                report.append("\t\t<td>" + drive['non_urban'] + "</td>\n")
+                report.append(tab_td + drive['date'] + t_d)
+                report.append(tab_td + drive['time_start'] + t_d)
+                report.append(tab_td + drive['time_end'] + t_d)
+                report.append(tab_td + drive['driven_time'] + t_d)
+                report.append(tab_td + drive['odometer_start'] + t_d)
+                report.append(tab_td + drive['odometer_end'] + t_d)
+                report.append(tab_td + drive['driven_distance'] + t_d)
+                report.append(tab_td + drive['urban'] + t_d)
+                report.append(tab_td + drive['non_urban'] + t_d)
                 report.append("\t</tr>\n")
 
             # Add the total values
@@ -92,63 +95,57 @@ def generate_report():
     print("The report created successfully.")
 
 
-def insert_data(current_drive):
-    """Set the drive data"""
+def validate_inserted_data(current_drive):
+    """Validate that all needed ata exists"""
 
     regex_time = re.compile('^\\d{2}:\\d{2}$')
     regex_odometer = re.compile('^\\d{1,6}$')
 
+    try:
+        if "date" not in current_drive:
+            raise KeyError("No date provided.")
+        if "time_start" not in current_drive:
+            raise KeyError("No end time provided.")
+        if "time_end" not in current_drive:
+            raise KeyError("No end time provided.")
+        if "odometer_start" not in current_drive:
+            raise KeyError("No end odometer provided.")
+        if "odometer_end" not in current_drive:
+            raise KeyError("No start odometer provided.")
+        if "urban" not in current_drive:
+            raise KeyError("No urban flag provided.")
+        if "non_urban" not in current_drive:
+            raise KeyError("No non urban flag provided.")
+        if current_drive['date'] is None or current_drive['date'] == "":
+            raise KeyError("Invalid date provided.")
+        if current_drive['time_end'] is None or current_drive['time_end'] == "":
+            raise KeyError("Invalid end time provided.")
+        if current_drive['time_start'] is None or current_drive['time_start'] == "":
+            raise KeyError("Invalid start time provided.")
+        if current_drive['odometer_end'] is None or current_drive['odometer_end'] == "":
+            raise KeyError("Invalid end odometer read provided.")
+        if current_drive['odometer_start'] is None or current_drive['odometer_start'] == "":
+            raise KeyError("Invalid start odometer read provided.")
+        if regex_time.match(current_drive['time_start']) is None:
+            raise KeyError("Start time has wrong format.")
+        if regex_time.match(current_drive['time_end']) is None:
+            raise KeyError("End time has wrong format.")
+        if regex_odometer.match(current_drive['odometer_start']) is None:
+            raise KeyError("Odometer start has wrong format.")
+        if regex_odometer.match(current_drive['odometer_end']) is None:
+            raise KeyError("Odometer end has wrong format.")
+    except KeyError as key_error:
+        return key_error
+
+
+def insert_data(current_drive):
+    """Set the drive data"""
+
     # validate
-    if "date" not in current_drive:
-        print("No date provided.")
-        return
-    if "time_start" not in current_drive:
-        print("No end time provided.")
-        return
-    if "time_end" not in current_drive:
-        print("No end time provided.")
-        return
-    if "odometer_start" not in current_drive:
-        print("No end odometer provided.")
-        return
-    if "odometer_end" not in current_drive:
-        print("No start odometer provided.")
-        return
-    if "urban" not in current_drive:
-        print("No urban flag provided.")
-        return
-    if "non_urban" not in current_drive:
-        print("No non urban flag provided.")
-        return
+    status = validate_inserted_data(current_drive)
+    if status is not None or status != "":
+        sys.exit(str(status))
 
-    if current_drive['date'] is None or current_drive['date'] == "":
-        print("Invalid date provided.")
-        return
-    if current_drive['time_end'] is None or current_drive['time_end'] == "":
-        print("Invalid end time provided.")
-        return
-    if current_drive['time_start'] is None or current_drive['time_start'] == "":
-        print("Invalid start time provided.")
-        return
-    if current_drive['odometer_end'] is None or current_drive['odometer_end'] == "":
-        print("Invalid end odometer read provided.")
-        return
-    if current_drive['odometer_start'] is None or current_drive['odometer_start'] == "":
-        print("Invalid start odometer read provided.")
-        return
-
-    if regex_time.match(current_drive['time_start']) is None:
-        print("Start time has wrong format.")
-        return
-    if regex_time.match(current_drive['time_end']) is None:
-        print("End time has wrong format.")
-        return
-    if regex_odometer.match(current_drive['odometer_start']) is None:
-        print("Odometer start has wrong format.")
-        return
-    if regex_odometer.match(current_drive['odometer_end']) is None:
-        print("Odometer end has wrong format.")
-        return
 
     # calculate the amount of kilometers driven
     kilometers_driven = int(current_drive['odometer_end']) - int(current_drive['odometer_start'])
@@ -191,6 +188,7 @@ def add_session(current_session):
 
 
 def add_drive_time(current_time, added_time):
+    """Accumulate the drive time"""
     current = convert_time_to_minutes(current_time)
     added_time = convert_time_to_minutes(added_time)
     total = current + added_time
@@ -198,10 +196,12 @@ def add_drive_time(current_time, added_time):
 
 
 def convert_time_to_minutes(some_time):
+    """Get time in format hh:mm, return in minutes"""
     return 60 * int(some_time.split(":")[0])  + int(some_time.split(":")[1])
 
 
 def convert_minutes_to_hours(minutes):
+    """get amount of minutes, return in HH:MM format"""
     converted = {'hours': 0, 'minutes': 0}
     while minutes >= 60:
         converted['hours'] += 1
@@ -218,6 +218,7 @@ def calculate_time_driven(start, end):
 
 
 def convert_minutes_to_time(minutes):
+    """Get time in minutes, return in hh:mm format"""
     total_time = [0, 0]
     if minutes < 60:
         total_time[1] = minutes
