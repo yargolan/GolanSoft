@@ -134,6 +134,7 @@ def validate_inserted_data(current_drive):
             raise KeyError("Odometer start has wrong format.")
         if regex_odometer.match(current_drive['odometer_end']) is None:
             raise KeyError("Odometer end has wrong format.")
+        return None
     except KeyError as key_error:
         return key_error
 
@@ -143,7 +144,7 @@ def insert_data(current_drive):
 
     # validate
     status = validate_inserted_data(current_drive)
-    if status is not None or status != "":
+    if status is not None and status != "":
         sys.exit(str(status))
 
 

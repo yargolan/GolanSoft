@@ -54,6 +54,28 @@
       "odometer_start": "78500",
       "driven_distance": 66,
       "driven_time": 50
+    },
+    {
+      "date": "08/04/2023",
+      "urban": "no",
+      "time_end": "09:45",
+      "non_urban": "yes",
+      "time_start": "08:00",
+      "odometer_end": "17260",
+      "odometer_start": "17100",
+      "driven_distance": 160,
+      "driven_time": 105
+    },
+    {
+      "date": "08/04/2023",
+      "urban": "no",
+      "time_end": "13:00",
+      "non_urban": "no",
+      "time_start": "10:00",
+      "odometer_end": "17290",
+      "odometer_start": "17260",
+      "driven_distance": 30,
+      "driven_time": 180
     }
   ]
 }
